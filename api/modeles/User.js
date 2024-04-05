@@ -6,27 +6,41 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  username: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     unique: true,
     required: true
   },
-  age: {
-    type: Number,
+
+  about: {
+    type: String,
+    
+  },
+  avatar_path: {
+    type: String,
+    
+  },
+  password: {
+    type: String,
     required: true
   },
-  posts: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Post"
-    }
-  ],
-  comments: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Comment"
-    }
-  ]
+  phone: {
+    type: String,
+   
+  },
+  
+created_at: {
+    type: Date,
+    default: Date.now()
+ 
+}
+  
+ 
+  
 });
 
 module.exports = model("User", UserSchema)
