@@ -7,6 +7,8 @@ import Post from '../../commponents/Post'
 import LestSide from '../../commponents/LeftSide'
 import RightSide from '../../commponents/RightSide'
 import NavBar from '../../commponents/NavBar'
+import Cookies from "js-cookie"
+import { useRouter } from 'next/router';
 
 import { ApolloClient, InMemoryCache, ApolloProvider, useQuery, gql } from '@apollo/client';
 
@@ -16,7 +18,23 @@ const client = new ApolloClient({
 });
 
 const Home: NextPage = () => {
+  const router = useRouter();
+  const [userData, setUserData] = useState<Record<string, any> | undefined>(undefined);
+  useEffect(() => {
+    const datta = Cookies.get('userDataC');
+    if (!datta) {
+      router.push('/login');
+    }
+  }
+    , [router]);
 
+  useEffect(() => {
+    const dataFromCookie = Cookies.get('userDataC');
+    if (dataFromCookie) {
+      setUserData(JSON.parse(dataFromCookie));
+    }
+  }
+    , []);
 
 
   const GET_FEATURED_PRODUCTS = gql`
@@ -41,13 +59,13 @@ const Home: NextPage = () => {
     console.log('data', data)
     return (
       <div>
-       
-        
-          {data.listPosts.map((post: { _id: React.Key | null | undefined; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }) => (
-            <Post {...post}/>
-          ))}
-        
-        
+
+
+        {data.listPosts.map((post: { _id: React.Key | null | undefined; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }) => (
+          <Post {...post} />
+        ))}
+
+
       </div>
     )
   }
@@ -58,22 +76,26 @@ const Home: NextPage = () => {
   return (
     <ApolloProvider client={client}>
       <div className="min-h-screen bg-[#F0F2F5]">
-        <NavBar />
+        <NavBar  {...userData}/>
 
 
         <main>
-          <div className="mx-auto flex space-x-4 max-w-screen py-6 sm:px-6 lg:px-8">
-            
-            <div className='w-1/4'>
-            <LestSide />
+          <div className="mx-auto pt-20 flex space-x-4 max-w-screen py-6 sm:px-6 lg:px-8">
+
+            <div className='w-1/4 '>
+              <div className='justify-end flex'>
+                <LestSide {...userData} />
+              </div>
             </div>
             <div className='w-2/4 space-y-4'>
-              
+
               <Feed />
-              
+
             </div>
             <div className='w-1/4'>
-            <RightSide/>
+              <div className='justify-start flex'>
+                {/* <RightSide /> */}
+              </div>
             </div>
           </div>
         </main>

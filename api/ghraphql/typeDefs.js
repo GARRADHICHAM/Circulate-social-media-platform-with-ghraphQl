@@ -7,7 +7,7 @@ const typeDefs = gql`
     title: String
     body: String
     tags:String
-    author:User
+    author:String
     pathfile:String
     
     

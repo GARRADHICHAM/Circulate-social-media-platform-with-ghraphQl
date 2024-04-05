@@ -9,7 +9,7 @@ const RightSide = () => {
     return (
 
         <div
-        className="bg-white  shadow-[0_2px_15px_-6px_rgba(0,0,0,0.2)] p-2 w-full max-w-sm rounded-lg font-[sans-serif] overflow-hidden mx-auto ">
+        className="bg-white fixed  shadow-[0_2px_15px_-6px_rgba(0,0,0,0.2)] p-2  rounded-lg font-[sans-serif] overflow-hidden mx-auto ">
         <div className=" p-2 flex-col items-center">
           
           <div className=" text-center">
