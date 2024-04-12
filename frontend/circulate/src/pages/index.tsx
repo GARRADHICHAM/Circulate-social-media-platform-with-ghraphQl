@@ -76,7 +76,7 @@ const Home: NextPage = () => {
   return (
     <ApolloProvider client={client}>
       <div className="min-h-screen bg-[#F0F2F5]">
-        <NavBar  {...userData}/>
+        <NavBar  {...userData} />
 
 
         <main>
@@ -88,6 +88,18 @@ const Home: NextPage = () => {
               </div>
             </div>
             <div className='w-2/4 space-y-4'>
+              <div className='bg-white p-2 space-x-6 w-full flex rounded-xl shadow-md'>
+                <div className="items-center rounded-xl p-2 px-4 bg-gray-800 flex space-x-2">
+                  <img className="w-5 h-5" src="HomeW.png" />
+                  <h1 className="font-semibold text-white">Home</h1>
+                </div>
+
+                <div className="items-center flex space-x-2">
+                  <img className="w-5 h-5" src="newVF.png" />
+                  <h1 className="font-semibold">New</h1>
+                </div>
+
+              </div>
 
               <Feed />
 

@@ -56,6 +56,17 @@ module.exports = {
       return user;
     }
     ,
+    async updateUser(_, { ID,  name, username, phone, about  }) {
+      const wasUpdated = (await Post.updateOne({ _id: ID }, {
+        name: name,
+        username: username,
+        email: email,
+        phone: phone,
+        about: about,
+      })).modifiedCount;
+
+      return wasUpdated
+    },
     async createPost(_, { postInput: { title, body, tags, author, pathfile } }) {
       const newPost = new Post({
         title: title,

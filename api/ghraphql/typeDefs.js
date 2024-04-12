@@ -53,6 +53,7 @@ const typeDefs = gql`
     signUp(userInput:UserInput): User!
     signIn(email: String!, password: String!): User
     createPost(postInput: PostInput): Post!
+    updateUser(id: ID!, name: String, username: String , email:String ,phone:String ,about:String): String
     updatePost(id: ID!, title: String, text: String): String
     deletePost(id: ID!): String
   }
