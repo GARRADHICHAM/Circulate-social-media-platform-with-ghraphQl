@@ -3,7 +3,7 @@ const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
 
 // Connection URI
-const uri = 'mongodb://localhost:27017/Circulate'; // Replace 'mydatabase' with your database name
+const uri = 'mongodb://localhost:27017/Circulate'; 
 
 
 const typeDefs = require('./ghraphql/typeDefs')

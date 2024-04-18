@@ -32,6 +32,7 @@ const Home: NextPage = () => {
     const dataFromCookie = Cookies.get('userDataC');
     if (dataFromCookie) {
       setUserData(JSON.parse(dataFromCookie));
+      console.log("userdatttta :", dataFromCookie)
     }
   }
     , []);
@@ -42,21 +43,47 @@ const Home: NextPage = () => {
     listPosts(amount: $amount) {
       title
       tags
-      id
+      _id
       body
-      author
+      author {   
+        id
+        username
+        avatar_path
+        created_at
+    }
+    created_at
     }
   }
   `;
 
+
+      const GET_NEW_POSTES = gql`
+            query Query($amount: Int) {
+              listNew(amount: $amount) {
+                  _id
+                  title
+                  body
+                  tags
+                  author {
+                    id
+                    username
+                    avatar_path
+                    created_at
+                  }
+                  pathfile
+                  created_at
+              }
+    }
+    `;
+
   function Feed() {
     const { loading, error, data } = useQuery(GET_FEATURED_PRODUCTS, {
-      variables: { amount: 10 },
+      variables: { amount: 100 },
     });
-
+    console.log("dataFeed :", data)
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
-    console.log('data', data)
+
     return (
       <div>
 
@@ -70,6 +97,29 @@ const Home: NextPage = () => {
     )
   }
 
+  function NewFeed() {
+    const { loading, error, data } = useQuery(GET_NEW_POSTES, {
+      variables: { amount: 100 },
+    });
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+
+    return (
+      <div>
+
+
+        {data.listNew.map((post: { _id: React.Key | null | undefined; title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }) => (
+          <Post {...post} />
+        ))}
+
+
+      </div>
+    )
+  }
+
+  const [home, setHome] = useState(true)
+  const [newP, setNew] = useState(false)
 
 
 
@@ -89,19 +139,35 @@ const Home: NextPage = () => {
             </div>
             <div className='w-2/4 space-y-4'>
               <div className='bg-white p-2 space-x-6 w-full flex rounded-xl shadow-md'>
-                <div className="items-center rounded-xl p-2 px-4 bg-gray-800 flex space-x-2">
-                  <img className="w-5 h-5" src="HomeW.png" />
-                  <h1 className="font-semibold text-white">Home</h1>
+                <div onClick={() => { setHome(true), setNew(false) }} className={`items-center rounded-xl p-2 px-4 ${home ? ("bg-gray-800") : ('bg-white')}  cursor-pointer flex space-x-2`}>
+                  {home ? (
+                    <img className="w-5 h-5" src="HomeW.png" />
+                  ) : (
+                    <img className="w-5 h-5" src="homeVF.png" />
+                  )}
+
+                  <h1 className={`font-semibold ${home ? ("text-white") : ("text-black")}  `}>Home</h1>
                 </div>
 
-                <div className="items-center flex space-x-2">
-                  <img className="w-5 h-5" src="newVF.png" />
-                  <h1 className="font-semibold">New</h1>
+                <div onClick={() => { setHome(false), setNew(true) }} className={`items-center rounded-xl p-2 px-4 ${newP ? ("bg-gray-800") : ('bg-white')} cursor-pointer flex space-x-2`}>
+
+
+                  {newP ? (
+                    <img className="w-5 h-5" src="NewW.png" />
+                  ) : (
+                    <img className="w-5 h-5" src="newVF.png" />
+                  )}
+                  <h1 className={`font-semibold ${newP ? ("text-white") : ('text-black')}`}>New</h1>
                 </div>
 
               </div>
+              {home && (
+                <Feed />
+              )}
+              {newP && (
+                <NewFeed />
+              )}
 
-              <Feed />
 
             </div>
             <div className='w-1/4'>

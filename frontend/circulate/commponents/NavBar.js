@@ -1,11 +1,18 @@
 
 
 import dynamic from "next/dynamic";
-
+import CreatePost from './CreatePoste'
+import { useRouter } from 'next/router';
+import Cookies from 'js-cookie'; 
 
 const NavBar = (data) => {
-
-  const pathAvatar = 'https://tali3a-bucket.s3.amazonaws.com' + data?.avatar_path;
+  const router = useRouter()
+  const pathAvatar = data?.avatar_path;
+  const logOut = () => {
+    Cookies.remove('userDataC');
+    
+    router.push('/login');
+  }
 
   return (
 
@@ -23,8 +30,11 @@ const NavBar = (data) => {
           <div className="hidden md:block">
 
             <div className="ml-4 flex items-center md:ml-6">
+              <h1 onClick={logOut} className="text-white font-semibold pr-4 hover:text-[#fd6060] cursor-pointer hover:underline hover:underline-offset-2 ">
+                Log Out
+              </h1>
               <div className="relative top-0">
-                <button className="  p-2  w-full rounded-full bg-[#2492FF] text-white font-bold">Create Post</button>
+              <CreatePost />
 
               </div>
 

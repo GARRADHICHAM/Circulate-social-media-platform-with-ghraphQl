@@ -32,39 +32,7 @@ const UploadAvatar = (props) => {
     setIsOpen(!isOpen);
   };
 
-  // const updatusr = async (file1) => {
-  //   try {
-
-  //     const response = await updateAvatar(file1);
-
-  //     console.log('resp2', response)
-  //     // if (response) {
-
-
-  //     //   //   setUpdated(!updated);
-  //     //   setUserpic("https://tali3a-bucket.s3.amazonaws.com" + response?.avatar_path)
-  //     //   console.log('picc', "https://tali3a-bucket.s3.amazonaws.com" + response?.avatar_path)
-       
-  //     //   const userData = Cookies.get('userData');
-  //     //   const userDataObj = JSON.parse(userData);
-  //     //   // Update a specific attribute in the object
-  //     //   userDataObj.avatar_path = response?.avatar_path;
-  //     //   const updatedUserData = JSON.stringify(userDataObj);
-  //     //   Cookies.set('userData', updatedUserData, {
-  //     //     expires: 7,
-  //     //     secure: false,
-  //     //     httpOnly: false,
-  //     //     sameSite: 'Lax',
-  //     //   });
-  //     //   router.reload();
-
-  //     // }
-  //   } catch (error) {
-  //     console.error('fetch failed:', error);
-  //     // Handle any errors that occurred during the upvote process
-  //   }
-  // };
-
+ 
   var editor = "";
 
 
@@ -72,7 +40,7 @@ const UploadAvatar = (props) => {
     cropperOpen: false,
     img: null,
     zoom: 2,
-    croppedImg: "https://tali3a-bucket.s3.amazonaws.com" + props.data,
+    croppedImg:  props.data,
   });
 
   const handleSlider = (event, value) => {
@@ -100,7 +68,7 @@ const UploadAvatar = (props) => {
 
       //save methode==================================================================================
 
-      // updatusr(croppedImg);
+      
 
 
 

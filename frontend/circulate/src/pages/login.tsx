@@ -32,14 +32,15 @@ const Login: NextPage = () => {
     const SIGN_IN = gql`
     mutation Mutation($email: String!, $password: String!) {
         signIn(email: $email, password: $password) {
-            username
-            phone
-            password
+            _id
             name
-            id
+            username
             email
+            password
             avatar_path
+            phone
             about
+            created_at
   }
 }
     `;
@@ -68,13 +69,14 @@ const Login: NextPage = () => {
             const result = await signInUser({ variables: { email, password } });
             console.log('Signed in user:', result.data?.signIn);
             if(result){
-                router.push('/')
+                
                 Cookies.set('userDataC', JSON.stringify(result.data?.signIn), {
                     expires: 7, // Set the cookie to expire after 7 days
                     secure: false, // Ensure the cookie is sent over HTTPS only
                     httpOnly: false, // Prevent JavaScript access to the cookie (enhances security)
                     sameSite: 'Lax',
                   });
+                  router.push('/')
             }
             // Handle successful sign-in (e.g., redirect user)
         } catch (error:any) {
@@ -124,7 +126,7 @@ const Login: NextPage = () => {
                                 {error && <p>Error: {error.message}</p>}
                                 <button type="submit" onClick={handleSubmit} className="w-full text-white bg-[#2563EB] hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign in</button>
                                 <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                                    Don’t have an account yet? <a href="#" className="font-medium text-[#2563EB] hover:underline dark:text-primary-500">Sign up</a>
+                                    Don’t have an account yet? <a href="/SignUp" className="font-medium text-[#2563EB] hover:underline dark:text-primary-500">Sign up</a>
                                 </p>
                             </form>
                         </div>

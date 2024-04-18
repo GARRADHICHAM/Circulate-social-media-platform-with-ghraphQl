@@ -72,13 +72,13 @@ const SignUp: NextPage = () => {
             const result = await signUpUser({ variables:{userInput: {   username:username, password:password,name:name,email:email }} });
             console.log('Signed in user:', result.data?.signUp);
             if (result) {
-                router.push('/')
-                Cookies.set('userDataC', JSON.stringify(result.data?.signUp), {
-                    expires: 7, // Set the cookie to expire after 7 days
-                    secure: false, // Ensure the cookie is sent over HTTPS only
-                    httpOnly: false, // Prevent JavaScript access to the cookie (enhances security)
-                    sameSite: 'Lax',
-                });
+                router.push('/login')
+                // Cookies.set('userDataC', JSON.stringify(result.data?.signUp), {
+                //     expires: 7, // Set the cookie to expire after 7 days
+                //     secure: false, // Ensure the cookie is sent over HTTPS only
+                //     httpOnly: false, // Prevent JavaScript access to the cookie (enhances security)
+                //     sameSite: 'Lax',
+                // });
             }
             // Handle successful sign-in (e.g., redirect user)
         } catch (error: any) {
